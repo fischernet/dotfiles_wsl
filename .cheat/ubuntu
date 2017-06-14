@@ -1,0 +1,9 @@
+# nuke package sys
+
+# clean local repo of retrieved package filess
+sudo apt-get clean
+# correct broken depend (ie. '-f' = fix broken)
+sudo apt-get update
+# config the pacakges which haven't benn config'd yet (ie. '-a' = all)
+sudo dpkg --configure -a
+
