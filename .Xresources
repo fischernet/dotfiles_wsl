@@ -1,0 +1,120 @@
+----------------------------------------------------------------------------
+! URxvt Color theme (scheme browser -> xcolors.net -> derp)
+! site: https://terminal.sexy/
+! tips: https://wiki.archlinux.org/index.php/Rxvt-unicode/Tips_and_tricks
+----------------------------------------------------------------------------
+
+! special
+*.foreground:   #d3d0c8
+*.background:   #2d2d2d
+*.cursorColor:  #d3d0c8
+
+! black
+*.color0:       #2d2d2d
+*.color8:       #747369
+
+! red
+*.color1:       #f2777a
+*.color9:       #f2777a
+
+! green
+*.color2:       #99cc99
+*.color10:      #99cc99
+
+! yellow
+*.color3:       #ffcc66
+*.color11:      #ffcc66
+
+! blue
+*.color4:       #6699cc
+*.color12:      #6699cc
+
+! magenta
+*.color5:       #cc99cc
+*.color13:      #cc99cc
+
+! cyan
+*.color6:       #66cccc
+*.color14:      #66cccc
+
+! white
+*.color7:       #d3d0c8
+*.color15:      #f2f0ec
+
+
+----------------------------------------------------------------------------
+! URxvt Options
+!
+----------------------------------------------------------------------------
+
+URxvt.font: xft:FiraCode:size=11
+
+URxvt.scrollBar: false
+
+! switching inactive/active windows
+urxvt*fading: 25
+
+! fake transparency
+urxvt*transparent: true
+urxvt*shading: 15
+
+! real transparency
+!URxvt.depth: 32
+!URxvt.background: rgba:2d00/2d00/2d00/ee00
+!URxvt.background: [97]#2d2d2d
+
+!urxvt*fadeColor:       #000000
+
+URxvt.cursorBlink: True
+
+----------------------------------------------------------------------------
+! URxvt Extensions
+!
+----------------------------------------------------------------------------
+
+
+URxvt.perl-ext-common: tabbed
+URxvt.tabbed.tabbar-fg: 3
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 0
+URxvt.tabbed.tab-bg: 3
+
+------------------------------------------------------------------------------
+! ROFI Color theme
+! 
+------------------------------------------------------------------------------
+
+
+! Use extended color scheme
+rofi.color-enabled:                  true
+
+! Color scheme for normal row
+rofi.color-normal:                   argb:00000000,  #e7e18c  , argb:00000000, #fff796 , #130f0c
+
+! Color scheme for urgent row
+rofi.color-urgent:                   argb:00000000,  #F99157 , argb:00000000,  #F99157 ,  #1B2B34
+
+! Color scheme for active row
+rofi.color-active:                   argb:00000000,  #6699CC , argb:00000000,  #6699CC ,  #1B2B34
+
+! Color scheme window
+rofi.color-window:                   argb:e1130f0c,  #c6c6c6 , #c6c6c6
+
+
+rofi.separator-style:   solid
+rofi.fullscreen:        true
+rofi.padding:           250
+rofi.hide-scrollbar:    true
+rofi.line-margin:       5
+rofi.fake-transparency: true
+rofi.yoffset:           0
+rofi.xoffset:           0
+rofi.width:             1366
+rofi.opacity:           90
+rofi.font: FiraCode 15
+rofi.location: 0
+
+----------------------------------------------------------------------------
+! other
+!
+----------------------------------------------------------------------------
