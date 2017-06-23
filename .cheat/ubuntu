@@ -4,6 +4,6 @@
 sudo apt-get clean
 # correct broken depend (ie. '-f' = fix broken)
 sudo apt-get update
-# config the pacakges which haven't benn config'd yet (ie. '-a' = all)
+# config the pacakges which != config'd yet (ie. '-a' = all)
 sudo dpkg --configure -a
 

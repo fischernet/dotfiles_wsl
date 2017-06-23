@@ -5,41 +5,41 @@
 ----------------------------------------------------------------------------
 
 ! special
-*.foreground:   #d3d0c8
-*.background:   #2d2d2d
-*.cursorColor:  #d3d0c8
+*.foreground:   #f8f8f2
+*.background:   #272822
+*.cursorColor:  #f8f8f2
 
 ! black
-*.color0:       #2d2d2d
-*.color8:       #747369
+*.color0:       #272822
+*.color8:       #75715e
 
 ! red
-*.color1:       #f2777a
-*.color9:       #f2777a
+*.color1:       #f92672
+*.color9:       #f92672
 
 ! green
-*.color2:       #99cc99
-*.color10:      #99cc99
+*.color2:       #a6e22e
+*.color10:      #a6e22e
 
 ! yellow
-*.color3:       #ffcc66
-*.color11:      #ffcc66
+*.color3:       #f4bf75
+*.color11:      #f4bf75
 
 ! blue
-*.color4:       #6699cc
-*.color12:      #6699cc
+*.color4:       #66d9ef
+*.color12:      #66d9ef
 
 ! magenta
-*.color5:       #cc99cc
-*.color13:      #cc99cc
+*.color5:       #ae81ff
+*.color13:      #ae81ff
 
 ! cyan
-*.color6:       #66cccc
-*.color14:      #66cccc
+*.color6:       #a1efe4
+*.color14:      #a1efe4
 
 ! white
-*.color7:       #d3d0c8
-*.color15:      #f2f0ec
+*.color7:       #f8f8f2
+*.color15:      #f9f8f5
 
 
 ----------------------------------------------------------------------------
@@ -78,6 +78,7 @@ URxvt.tabbed.tabbar-fg: 3
 URxvt.tabbed.tabbar-bg: 0
 URxvt.tabbed.tab-fg: 0
 URxvt.tabbed.tab-bg: 3
+*URxvt.perl-ext-common:	osc-xterm-clipboard
 
 ------------------------------------------------------------------------------
 ! ROFI Color theme

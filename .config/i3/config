@@ -166,7 +166,7 @@ bindsym XF86AudioPrev exec playerctl previous
 # i3 Gaps
 for_window [class="^.*"] border pixel 3
 gaps inner 11
-gaps outer 5
+gaps outer 2
 
 # reload the configuration file
 bindsym $mod+Shift+c reloadx
@@ -177,7 +177,7 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 exec_always feh --bg-fill $HOME/Pictures/wallpaper.png
-#exec --no-startup-id xss-lock -- i3lock -n -i ~/Pictures/wallpaper.png
+#exec --no-startup-id xss-lock -- i2lock -n -i ~/Pictures/wallpaper.png
 #exec_always compton -f
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 #exec --no-startup-id nm-applet
