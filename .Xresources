@@ -55,13 +55,13 @@ URxvt.scrollBar: false
 urxvt*fading: 25
 
 ! fake transparency
-urxvt*transparent: true
-urxvt*shading: 15
+!urxvt*transparent: true
+!urxvt*shading: 15
 
 ! real transparency
-!URxvt.depth: 32
-!URxvt.background: rgba:2d00/2d00/2d00/ee00
-!URxvt.background: [97]#2d2d2d
+URxvt.depth: 32
+URxvt.background: rgba:2d00/2d00/2d00/ee00
+URxvt.background: [97]#2d2d2d
 
 !urxvt*fadeColor:       #000000
 
