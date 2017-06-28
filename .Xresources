@@ -60,7 +60,7 @@ urxvt*fading: 25
 
 ! real transparency
 URxvt.depth: 32
-URxvt.background: rgba:2d00/2d00/2d00/ee00
+!URxvt.background: rgba:2d00/2d00/2d00/ee00
 URxvt.background: [97]#2d2d2d
 
 !urxvt*fadeColor:       #000000
@@ -73,7 +73,7 @@ URxvt.cursorBlink: True
 ----------------------------------------------------------------------------
 
 
-#URxvt.perl-ext-common: tabbed
+!URxvt.perl-ext-common: tabbed
 URxvt.tabbed.tabbar-fg: 3
 URxvt.tabbed.tabbar-bg: 0
 URxvt.tabbed.tab-fg: 0

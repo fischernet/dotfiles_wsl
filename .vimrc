@@ -43,3 +43,4 @@ set encoding=utf-8
 set hlsearch
 " jump to the matches while typing
 set incsearch
+

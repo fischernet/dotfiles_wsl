@@ -1,0 +1,343 @@
+LIBNAME libref 'SAS-library' <options>;
+
+# PROC Contents & Print 
+# <options> ._ALL_ (displays contents of SAS library)
+# <options> ._ALL_NODS (displays all contents w/o DS)
+PROC CONTENTS DATA=libref._ALL_ NODS; RUN;
+PROC PRINT DATA=libref.SAS-data-set; RUN;
+
+# Clear libref - remains in effect until you cancel/change/end SAS session
+LIBNAME libref CLEAR;
+
+# Reading Spreadsheet Data
+LIBNAME libref <engine> "workbook-name" <options>;
+LIBNAME libref <engine> <PATH=> "workbook-name" <options>;
+libref.'worksheetname$'n
+
+# Reading Database Data
+LIBNAME libref engine <SAS/ACCESS Oracle options>;
+
+# Subset Report DATA
+PROC PRINT DATA=SAS-data-set;
+    VAR variable(s);
+    SUM variable(s);
+RUN;
+
+# Specify a variable to print at the beginning row instead of obs
+ID variable(s);
+
+# Subset observations in a Report
+# != in RAW, only in SAS datasets! 
+WHERE where-expression;
+
+# Sorting and Grouping Report Data
+PROC SORT DATA=input-SAS-data-set
+    <OUT=ouput-SAS-data-set>;
+    BY <DESCENDING> by-variable(s);
+RUN; 
+
+# Enhancing Reports 
+TITLEn 'text';
+FOOTNOTEn 'text';
+
+# def tmp labels to display in report instead of VAR names 
+PROC PRINT DATA=SAS-data-set LABEL;
+    LABEL variable='label'
+          variable='label'
+          ... ;
+RUN;
+
+# Control line breaks in column headings 
+SPLIT='split-character';
+
+# Using SAS Formats, use in a PROC PRINT statement
+FORMAT variable(s) format;
+
+# Creating & Applying Usr-Def formats
+PROC FORMAT;
+    VALUE format-name value-or-range1='formatted-value1'
+                      value-or-range2='formatted-value2'
+                      ...;
+RUN;
+
+# Reading a SAS Data set
+DATA output-SAS-data-set;
+    SET input-SAS-data-set;
+    WHERE where-expression;
+RUN;
+
+# Create new variables w/ assignment statement
+variable = exp
+
+# Customizing a SAS Data SET (IF = DATA Step only)
+DROP variable-list;
+KEEP variable-list;
+IF expression; 
+
+# Adding perm attributes (DATA Step)
+LABEL variable='label'
+      variable='label'
+      ... ;
+
+# Create a new 'work.sales' dataset from a existing one 'orion.sales'
+DATA work.sales
+	SET B.sales
+	WHERE ... RUN;
+
+# Using a DATA Step to Read raw data-set
+DATA output-SAS-data-set;
+	# libref is used to access SAS data sets in a SAS data library
+	# INFILE references to raw data file, libref != needed 
+    INFILE 'raw-data-file-name' DLM='delimiter';
+	# INPUT statement describes the arrangement of values in the raw data file 
+    # Assigns input values to the corresponding SAS variables 
+    INPUT specifications;
+RUN;
+
+# Using the LENGTH Statement (len = 8 bytes)
+# must precede the INPUT statement
+LENGTH var(s) <$> len;
+
+# Using Modified List input to read nonstandard data values (ie. date)
+# INPUT variable <$> variable<:informat>;
+# ':' colon format modifier (Read only until delimiter)
+data work.sales2;
+# DSD option sets the default delimiter to a comma 
+# treats consecutive delimiters as missing values
+# enables SAS to read values with embedded delimiters
+infile "&path/sales.csv" <dlm=','> <dlm=DSD> <MISSOVER>;
+input Employee_ID First_Name :$12.
+    Last_Name :$18. Gender :$1. Salary
+    Job_Title :$25. Country :$2.;
+run;
+
+# Read instream Data in DATA step
+# immediatly precedes the 1st data line 
+# DATALINES;
+data work.newemps;
+   # if instream data delimited w/ commas 
+   # ie. Steven, Worton, Auditor, $40,450
+   <infile datalines dlm=','>
+   input First_Name $ Last_Name $  
+        Job_Title $ Salary :dollar8.;
+   datalines;
+Steven Worton Auditor $40,450
+Merle Hieds Trainee $24,025
+Marta Bamberger Manager $32,000
+;
+
+# Prevent SAS from loading a new record when it reaches the end of
+# current record w/o finding values for all fields = set to MISSING 
+INFILE ' raw-data-file' MISSOVER;
+
+# Truncation often occurs with list input, b/c char var created w/ len= 8 bytes, by default. 
+# Use a LENGTH statement b4 INPUT statement in a DATA step to explicitly def len of char var
+LENGTH variable(s) <$> length;
+
+# Using the SUM Function in Assignment Statements
+# If B = MISSING, SUM value of NON-MISSING VALUE 
+A = SUM(1,MISSING) -> 1 
+A = 1, MISSING -> MISSING  
+
+# Conditional Processing
+IF exp THEN statement DO; END; ELSE IF exp THEN; ELSE exp;
+IF name IN ('ab','AB') THEN statement;
+IF upcase(name) = 'AB' THEN statement;
+# Equivalent Expressions
+if A=1 B=1; if A and B
+if A=1 B=0; if A and not B 
+
+SELECT(Group); WHEN (Gender) do; FirstName = '', LastName = ''
+
+# Specifying Multi Data Setsin SET Statement (concatenates)
+DATA SAS-data-set;
+    SET SAS-data-set1 SAS-data-set2 ...;
+RUN;
+
+# The RENAME= Data Set Option
+# Useful if you need to concatenate 2 tables 
+SAS-data-set(RENAME=(old-name-1=new-name-1 
+    old-name-2=new-name-2
+    ...
+    old-name-n=new-name-n))
+
+# Merging Data Sets (ie. Match-merging)
+# includes matching & non-matching data sets 
+# Relationships (1:1, 1:n, n:1, n:n)
+# MERGE and BY Statements in the DATA Step
+# Data sets must be sorted by the variables listed in the BY Statement
+DATA SAS-data-set;
+    MERGE SAS-data-set1 SAS-data-set2 ...;
+    BY <DESCENDING> BY-variable(s);
+       <additional SAS statements>
+RUN;
+
+# Using the IN= Data Set Option
+# ID which input data sets contribute to each obs of output
+# tmp variables, only written into PDV NOT output
+MERGE SAS-data-set (IN=variable)...
+
+# Use IN= Data Set in conjunction w/ IF
+# This selects obs that are non-matches/matches respect.
+data empsauc;
+   merge empsau(in=Emps) 
+         phonec(in=Cell);
+   by EmpID;
+   if Emps=1 and Cell=1;
+run;
+
+# Ex. 
+data work.allcustomer;
+   merge work.customer_sort(in=Cust) 
+         orion.lookup_country
+         (rename=(Start=Country
+         Label=Country_Name) in=Ctry);
+   by Country;
+   keep Customer_ID Country Customer_Name 
+        Country_Name;
+   # tmp var(s), can be any name
+   if Cust=1 and Ctry=1;
+run;
+
+# Find freq of a var; (Freq, Percent, Cum. Freq, Cum. Percent)
+# report the distribution of any/all var in SAS data set 
+# Suppressing Statistics in 1-Way Freq table via <options>
+# <options> tables Gender/nopercent OR Gender/nocum nopercent (multi), etc.	
+PROC FREQ DATA=SAS-data-set<option(s)>;
+    TABLES variable(s) <|option(s)>;
+    <additional statements>
+RUN; 
+
+# Selecting Variables for Freq TABLES
+# categorial, counts (ie. Gender counts) vs. continuous, numeric (ie. Date)
+# For continuous,numeric values, use existing SAS formats/usr-defined formats
+# ie.  
+ proc format;
+    value tiers 20000-<50000='Tier1'
+                50000-<100000='Tier2'
+                10000-250000='Tier3';
+run;
+# After you group the values of a continuous numeric variable into categories, 
+#  you can create a meaningful frequency table for that variable. 
+proc format;
+   value tiers low-25000='Tier1'
+               25000<-50000='Tier2'
+               50000<-100000='Tier3'
+               100000<-high='Tier4';
+run; 
+proc freq data=orion.sales;
+   tables Salary;
+   format Salary tiers.;
+run;
+
+# Listing Multi Var(s) in TABLES Statement
+# 2 tables will be produced
+proc freq data=orion.sales;
+   tables Gender Country;
+run;
+
+# ie. Whenever you use the BY statement, 
+# data set must be sorted by the variable named in the BY statement
+proc sort data=orion.sales out=sorted;
+   by Country;
+run;
+
+proc freq data=sorted;
+   tables Gender; 
+   by Country;
+run;
+
+# Using PROC FREQ to Create Crosstabulation TABLES 
+#  summarize data for two or more categorical variables by 
+#  showing the number of observations for each combination of variable value
+# 1st var = rows, 2nd var = cols
+proc freq data=orion.sales;
+   tables Gender*Country;
+run;
+
+# Suppressing Statistics in Crosstabulation TABLES
+# Specify the LIST option to display in LIST format (ie. crosslist as well)
+# FORMAT applicable, NOT IN LIST or CROSSLIST format
+proc freq data=orion.sales;
+   tables Gender* Country/nopercent list *norow & nocol;
+   format = 24; # labels 
+run;
+
+# Using PROC FREQ for Data Validation <order=freq> easier data parsing 
+proc freq data=orion.nonsales2 order=freq;
+   tables Employee_ID/nocum nopercent;
+run;
+  
+# ie. nlevels = no. of distinct values 
+# Number of var lvl table vs indiv frew tables, add the NOPRINT option to the TABLES statement. 
+proc freq data=orion.nonsales2 nlevels;
+   tables Gender Country Employee_ID/nocum nopercent;
+run;
+
+# The MEANS Procedure (Mean, Std Dev. Min, Max)
+PROC MEANS DATA=SAS-data-set<statistic(s)>;   
+        VAR analysis-variable(s);
+RUN;
+
+proc means data=orion.sales;
+   var Salary;
+run;
+
+# Grouping Obs by using teh CLASS Statement
+PROC MEANS DATA=SAS-data-set<statistic(s)>;   
+        VAR analysis-variable(s);
+        CLASS classification-variable(s);
+RUN; 
+
+# Specifying Statistics in the PROC MEANS Statement 
+# cntrl max number of decimal places 
+# MAXDEC=number 
+ proc means data=orion.sales min max sum maxdec=0;
+    var Salary;
+    class Gender Country;
+run;
+# omit  N Obs column
+proc means data=orion.sales nonobs;
+   var Salary;
+   class Gender Country;
+run;
+
+# Using the NMISS Option in PROC MEANS
+# NMISS option to display the number of observations with missing values. 
+proc means data=orion.nonsales2 n nmiss min max;
+   var Salary;
+run; 
+
+# Using PROC Univariate to Detect Data Outliers
+PROC UNIVARIATE DATA=SAS-data-set;   
+        VAR variable(s);
+RUN; 
+
+Procedure 	            Numeric  Character 	Method
+FREQ
+with TABLES statement 	X 	     X 			looking at distinct values
+
+PRINT
+with WHERE statements 	X 	     X 			subsetting observations based on conditions
+
+MEANS
+with VAR statement 	    X 	  	    		using summary statistics
+
+UNIVARIATE
+with VAR statements 	X 	       			looking at extreme values, missing 
+
+# Univariate (ie. Extreme Observations)
+# Shows the 5 LOW & 5 HIGH Salary values, by default w/o nextrobs
+# nextrobs=3 to specify value 
+proc univariate data=orion.nonsales2 nextrobs=3;
+   var Salary;
+
+run; 
+
+# Using SAS Output Delivery Sys
+ods pdf file="c:/output/salaries.pdf";
+proc means data=orion.sales min max sum;
+   var Salary;
+   class Gender Country;
+run;
+ods pdf close;

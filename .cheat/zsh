@@ -1,0 +1,14 @@
+# move to the beginnging of the line
+C-A
+
+# move to the end of the line
+C-E
+
+# move 1 word bkwd & fwd
+C+[left], C+[right]
+
+# clear entire line
+C-U
+
+# clear char(s) on the line after the cursor position
+C-K
